@@ -1,0 +1,40 @@
+---
+- block:
+  - name: Add Docker CE GPG key
+    apt_key:
+      state: present
+      url: "{{ docker[ansible_distribution].gpg_url }}"
+
+  - name: Add Docker CE repository
+    apt_repository:
+      state: present
+      repo: "{{ docker[ansible_distribution].repo }}"
+
+  - name: Update repositories
+    apt:
+      update_cache: yes
+      cache_valid_time: 3600
+
+  - name: Install Docker CE
+    apt:
+      name: docker-ce
+      state: present
+
+  - name: Add the daemon.json config file
+    template:
+      src: templates/daemon.json.j2
+      dest: /etc/docker/daemon.json
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: Add ansible user to docker group
+    user:
+      name: "{{ ansible_user }}"
+      groups: docker
+
+  - name: Enable and start docker service
+    service:
+      name: docker
+      state: started
+      enabled: yes

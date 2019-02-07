@@ -1,0 +1,54 @@
+docker:
+  Ubuntu:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+    gpg_url: https://download.docker.com/linux/ubuntu/gpg
+  Debian:
+    repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
+    gpg_url: https://download.docker.com/linux/debian/gpg
+  registry:
+    port: 5000
+    host: 10.0.0.181
+  insecureRegistries:
+    - 10.0.0.96:5000
+  registryMirrors:
+    - http://10.0.0.96:5000
+
+installers:
+  base_url: http://10.0.0.181
+  packages:
+    maven:
+      tar: apache-maven-3.5.3-bin.tar.gz
+      directory: "apache-maven-3.5.3"
+    tomcat:
+      tar: apache-tomcat-8.5.32.tar.gz
+      directory: "apache-tomcat-8.5.32"
+    jenkins:
+      tar: jenkins.war
+      directory: ""
+    jdk8_ubuntu:
+      tar: jdk-8u181-linux-x64.tar.gz
+      directory: "jdk1.8.0_181"
+    jdk8_rhel:
+      tar: jdk-8u181-linux-x64.rpm
+      directory: ""
+    mwe:
+      tar: mwe-containers-setup-1.1.0.8-latest.tar.gz
+      directory: mwe
+    sqlserver:
+      tar: sqlserver-docker.tar
+      directory: ""
+
+tomcat:
+  service:
+    environment:
+      JENKINS_HOME: /var/lib/jenkins
+
+nginx:
+  reverse_proxy:
+    scheme: http
+    host: localhost
+    port: 8080
+    path: "/"
+
+sqlserver:
+  sa_password: control123!

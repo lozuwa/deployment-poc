@@ -1,0 +1,6 @@
+---
+all:
+  hosts:
+    registry:
+      ansible_user: administrator
+      ansible_host: 10.0.0.96

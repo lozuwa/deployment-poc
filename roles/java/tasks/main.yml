@@ -1,0 +1,28 @@
+---
+- block:
+  - name: Uncompress targz
+    unarchive:
+      src: "{{ installers.base_url }}/{{ installers.packages.jdk8_ubuntu.tar }}"
+      dest: /opt
+      mode: 0755
+      remote_src: yes
+
+  - name: Add JAVA_HOME to profile
+    lineinfile:
+      path: /etc/bash.bashrc
+      state: present
+      line: "export JAVA_HOME=/opt/{{ installers.packages.jdk8_ubuntu.directory }}"
+
+  - name: Update alternatives for java
+    alternatives:
+      name: java
+      link: /usr/bin/java
+      path: "/opt/{{ installers.packages.jdk8_ubuntu.directory }}/bin/java"
+      priority: 100
+
+  - name: Update alternatives for javac
+    alternatives:
+      name: javac
+      link: /usr/bin/javac
+      path: "/opt/{{ installers.packages.jdk8_ubuntu.directory }}/bin/javac"
+      priority: 100
