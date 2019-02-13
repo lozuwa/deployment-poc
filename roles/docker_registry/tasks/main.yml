@@ -1,0 +1,40 @@
+---
+- block:
+  - name: Create directory for docker-compose services
+    file:
+      path: /opt/registry
+      state: directory
+      mode: 0755
+      owner: "{{ ansible_user }}"
+      group: "{{ ansible_user }}"
+
+  - name: Create directory for registry images store
+    file:
+      path: /opt/registry/store/images
+      state: directory
+      mode: 0755
+      owner: root
+      group: root
+
+  - name: Create directory for auth
+    file:
+      path: /opt/registry/auth
+      state: directory
+      mode: 0755
+      owner: root
+      group: root
+
+  - name: Copy docker-compose file
+    template:
+      src: templates/docker-compose.yml
+      dest: /opt/registry/docker-compose.yml
+
+  - name: Copy htpasswd
+    template:
+      src: templates/htpasswd
+      dest: /opt/registry/auth/htpasswd
+
+  - name: Start Registry service with docker-compose
+    shell: docker-compose up -d
+    args:
+      chdir: /opt/registry
