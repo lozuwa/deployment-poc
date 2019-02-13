@@ -1,0 +1,6 @@
+---
+all:
+  hosts:
+    registry:
+      ansible_user: administrator
+      ansible_host: 192.168.1.12
