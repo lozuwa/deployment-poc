@@ -2,6 +2,5 @@
 - hosts: all
   become: true
   roles:
-    - { role: docker }
-    - { role: docker_compose }
+    - { role: base_packages }
 
