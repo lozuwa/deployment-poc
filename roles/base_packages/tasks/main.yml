@@ -1,0 +1,17 @@
+---
+- block:
+  - include_tasks: ubuntu.yml
+    when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+
+  - include_tasks: rhel.yml
+    when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+
+  - name: Add tmux config file for ansible user
+    template:
+      src: templates/tmux.conf
+      dest: /home/{{ ansible_user }}/.tmux.conf
+      owner: "{{ ansible_user }}"
+      group: "{{ ansible_user }}"
+      mode: 0644
+
+      
