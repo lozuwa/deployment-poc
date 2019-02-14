@@ -1,0 +1,12 @@
+---
+- block:
+  - name: Enable the firewall ports that docker swarm will use
+    firewalld:
+      port: {{ item }}
+      permanent: yes
+      zone: public
+      state: enabled
+    loop:
+      - 2377/tcp
+      - 7946/tcp
+      - 4789/tcp
