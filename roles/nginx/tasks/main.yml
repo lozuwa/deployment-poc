@@ -1,0 +1,28 @@
+---
+- block:
+  - name: Install nginx web server
+    apt:
+      name: nginx
+      state: present
+
+  - name: Set autoindex settings for static file displays
+    template:
+      src: templates/static-index
+      dest: /etc/nginx/sites-available/default
+      mode: 0644
+      owner: root
+      group: root
+    when: type == "static"
+    notify:
+      - restart nginx
+
+  - name: Set reverse proxy all routes
+    template:
+      src: templates/reverse-proxy
+      dest: /etc/nginx/sites-available/default
+      mode: 0644
+      owner: root
+      group: root
+    when: type == "reverse_proxy"
+    notify:
+      - restart nginx

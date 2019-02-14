@@ -1,0 +1,22 @@
+---
+- block:
+  - name: Create jenkins home
+    file:
+      path: /var/lib/jenkins
+      state: directory
+      mode: 0755
+      owner: tomcat
+      group: tomcat
+
+  - name: Download jenkins war file
+    get_url:
+      url: "{{ installers.base_url }}/{{ installers.packages.jenkins.tar }}"
+      dest: /usr/share/tomcat/webapps/ROOT.war
+      mode: 0755
+      owner: tomcat
+      group: tomcat
+
+  - name: Restart tomcat
+    service:
+      name: tomcat
+      state: restarted

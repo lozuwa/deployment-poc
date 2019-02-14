@@ -1,0 +1,62 @@
+---
+- block:
+  - name: Add tomcat group
+    group:
+      name: tomcat
+
+  - name: Add tomcat user
+    user:
+      name: tomcat
+      group: tomcat
+      home: /usr/share/tomcat
+      createhome: no
+    become: True
+    become_method: sudo
+
+  - name: Uncompress tomcat tar.gz
+    unarchive:
+      src: "{{ installers.base_url }}/{{ installers.packages.tomcat.tar }}"
+      dest: /opt
+      mode: 0755
+      owner: tomcat
+      group: tomcat
+      remote_src: yes
+
+  - name: Set owners and permissions to tomcat directory
+    file:
+      path: "/opt/{{ installers.packages.tomcat.directory }}"
+      state: directory
+      mode: 0755
+      owner: tomcat
+      group: tomcat
+
+  - name: Symlink install directory to /usr/share/tomcat
+    file:
+      src: "/opt/{{ installers.packages.tomcat.directory }}"
+      path: /usr/share/tomcat
+      state: link
+
+  - name: Delete default apps
+    file:
+      path: /usr/share/tomcat/webapps/
+      state: absent
+
+  - name: Create clean webapps
+    file:
+      path: /usr/share/tomcat/webapps/
+      state: directory
+      mode: 0755
+      owner: tomcat
+      group: tomcat
+
+  - name: Create systemd script for tomcat
+    template:
+      src: templates/tomcat.service
+      dest: /etc/systemd/system/tomcat.service
+
+  - name: Start and enable Tomcat service
+    systemd:
+      name: tomcat
+      state: started
+      enabled: true
+      daemon_reload: true
