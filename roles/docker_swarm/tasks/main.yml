@@ -6,7 +6,3 @@
   - include_tasks: rhel.yml
     when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
 
-  - name: Install docker-py for usage with ansible
-    pip:
-      name: docker-py
-
