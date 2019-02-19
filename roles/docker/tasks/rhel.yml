@@ -18,21 +18,21 @@
       name: "{{ ansible_user }}"
       groups: docker
 
-  # - name: Add docker configuration directory
-  #   file:
-  #     state: directory
-  #     owner: root
-  #     path: /etc/docker
-  #     group: root
-  #     mode: 0644
+  - name: Add docker configuration directory
+    file:
+      state: directory
+      owner: root
+      path: /etc/docker
+      group: root
+      mode: 0644
 
-  # - name: Add the daemon.json config file
-  #   template:
-  #     src: templates/daemon.json.j2
-  #     dest: /etc/docker/daemon.json
-  #     owner: root
-  #     group: root
-  #     mode: 0644
+  - name: Add the daemon.json config file
+    template:
+      src: templates/daemon.json
+      dest: /etc/docker/daemon.json
+      owner: root
+      group: root
+      mode: 0644
 
   - name: Enable and start docker service
     service:

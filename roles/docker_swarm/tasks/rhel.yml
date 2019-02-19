@@ -1,5 +1,11 @@
 ---
 - block:
+  - name: Enable firewalld
+    service:
+      name=firewalld
+      state=started
+      enabled=yes
+
   - name: Enable the firewall ports that docker swarm will use
     firewalld:
       port: "{{ item }}"
@@ -7,6 +13,14 @@
       zone: public
       state: enabled
     loop:
+      - 80/tcp
       - 2377/tcp
       - 7946/tcp
       - 4789/tcp
+      - 7946/udp
+      - 4789/udp
+
+  - name: Restart firewalld
+    service:
+      name=firewalld 
+      state=restarted

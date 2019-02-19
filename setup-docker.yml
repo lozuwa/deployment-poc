@@ -3,5 +3,5 @@
   become: true
   roles:
     - { role: docker }
-    - { role: docker_compose }
+#    - { role: docker_compose }
 

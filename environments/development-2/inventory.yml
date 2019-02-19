@@ -3,4 +3,4 @@ all:
   hosts:
     registry:
       ansible_user: administrator
-      ansible_host: 10.0.0.102
+      ansible_host: 10.0.0.120

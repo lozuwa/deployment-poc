@@ -20,4 +20,4 @@
       - iotop
       - nmap
       - tcpdump
-      - netstat
+      - net-tools
