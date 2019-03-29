@@ -1,0 +1,15 @@
+--------------------------
+  Syslog driver for logs  
+--------------------------
+https://stackoverflow.com/questions/41846988/sending-docker-container-logs-to-elk-stack-by-configuring-the-logging-drivers
+https://docs.docker.com/config/containers/logging/configure/
+
+-------------
+  ELK stack  
+-------------
+https://medium.com/@bcoste/powerful-logging-with-docker-filebeat-and-elasticsearch-8ad021aecd87
+https://www.gilesorr.com/blog/elkbeats-beats-insecure.html
+
+
+
+
